@@ -69,6 +69,16 @@ CREATE TABLE bronze.fred_yield_germany (
 	IRLTLT01DEA156N FLOAT
 );
 
+-- Create Greece 10y yield table
+
+IF OBJECT_ID ('bronze.fred_yield_greece', 'U') IS NOT NULL
+	DROP TABLE bronze.fred_yield_greece;
+
+CREATE TABLE bronze.fred_yield_greece (
+	observation_date NVARCHAR(20), 	
+	IRLTLT01GRM156N FLOAT
+);
+
 -- Create India 10y yield table
 
 IF OBJECT_ID ('bronze.fred_yield_india', 'U') IS NOT NULL
