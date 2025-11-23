@@ -76,6 +76,17 @@ WITH (
     TABLOCK
 );
 
+-- Bulk insert into fred_yield_greece
+TRUNCATE TABLE bronze.fred_yield_greece;
+BULK INSERT bronze.fred_yield_greece
+FROM 'C:\Users\eslee\OneDrive\Desktop\Data Science\portfolio\SQL\Data Cleaning\fred_greece_yield.csv'
+WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '0x0a',
+    TABLOCK
+);
+
 -- Bulk insert into fred_yield_india
 TRUNCATE TABLE bronze.fred_yield_india;
 BULK INSERT bronze.fred_yield_india
