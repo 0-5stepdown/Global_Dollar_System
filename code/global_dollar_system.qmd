@@ -1,0 +1,628 @@
+---
+format:
+  html:
+    code-fold: false   
+    code-summary: ""      
+    execute:
+      echo: false         
+      warning: false     
+      results: "hide"
+---
+
+```{python}
+# Import libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import seaborn as sns
+import pyodbc
+import warnings
+
+# Configure Matplotlib view
+%matplotlib inline
+
+# Suppress warnings for a clean notebook view
+warnings.filterwarnings("ignore")
+```
+
+```{python}
+# Check ODBC driver installations
+## print(pyodbc.drivers())
+```
+
+```{python}
+# Connect to SQL database using pyodbc
+conn = pyodbc.connect(
+    'Driver={ODBC Driver 17 for SQL Server};'
+    'Server=localhost\\SQLEXPRESS;'
+    'Database=DataWarehouse;'
+    'Trusted_Connection=yes;'
+)
+```
+
+# How the global dollar system works
+
+At the end of World War II, the U.S. had significant influence to create a global dollar system in which international trade and financial transactions would be conducted in dollars. Leveraging its status as the sole remaining superpower with the largest share of the world's economic output and gold reserves, the U.S. argued that a global dollar system would guard against currency wars, trade barriers, and illiquid financial markets that contributed to the onset of World War II.
+
+Fast forwarding to more recent times, data from 1999 to 2019 shows that around 30% - 50% of global exports and imports were invoiced in dollars, indicating that the world continues to operate in a dollar-dominant international trade system.
+
+```{python}
+# SQL query to retrieve international trade data
+query_trade = '''
+SELECT 
+	YEAR(year) AS year,
+	flow,
+	num_countries,
+	total_usd / 1e12 AS total_usd,
+	usd_share / 1e12 AS usd_share,
+	pct_usd_share * 100 AS pct_usd_share
+FROM 
+	gold.imf_wb_trade_dollar_share
+WHERE
+	num_countries >= 20
+ORDER BY
+	year ASC,
+	flow ASC;
+'''
+```
+
+```{python}
+#| scrolled: true
+# Format year column as datetime and show only year
+df_trade = pd.read_sql(query_trade, conn)
+```
+
+```{python}
+#| scrolled: true
+# Dollars in billions
+df_trade.head();
+```
+
+```{python}
+# Set x-tick increments to show every 5th year
+min_year = df_trade['year'].min()
+max_year = df_trade['year'].max()
+years_to_show = np.arange(min_year, max_year + 1, 5)
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_export, ax1_export = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot lines for export values
+sns.lineplot(data = df_trade[df_trade['flow'] == 'Export'], x = 'year', y = 'total_usd', 
+             ax = ax1_export, label = 'Total Export'
+            )
+
+sns.lineplot(data = df_trade[df_trade['flow'] == 'Export'], x = 'year', y = 'usd_share', 
+             ax = ax1_export, label = 'USD-invoiced Export'
+            )
+
+# Plot formatting
+ax1_export.set_title('USD Share of Total Exports \n (in dollars)')
+ax1_export.set_xlabel('Year')
+ax1_export.set_ylabel('Dollars in trillions')
+ax1_export.set_xticks(years_to_show)
+ax1_export.set_xticklabels(years_to_show)
+ax1_export.legend(loc = 'upper left', bbox_to_anchor = (1, 1));
+```
+
+```{python}
+# Instantiate figure and axis
+fig2_export, ax2_export = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot horizontal bars for USD export percent
+sns.barplot(data = df_trade[df_trade['flow'] == 'Export'], x = 'year', y = 'pct_usd_share', 
+            ax = ax2_export, color = '#004C99');
+
+# Plot formatting
+ax2_export.set_title('USD Share of Total Exports \n (in percent)')
+ax2_export.set_xlabel('Year')
+ax2_export.set_ylabel('Percent')
+ax2_export.xaxis.set_major_locator(ticker.MultipleLocator(5));
+```
+
+```{python}
+# Instantiate figure and axis
+fig3_export, ax3_export = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot horizontal bars for number of countries reporting
+sns.barplot(data = df_trade[df_trade['flow'] == 'Export'], x = 'year', y = 'num_countries',
+            ax = ax3_export, color = '#990000');
+
+# Plot formatting
+ax3_export.set_title('Number of Countries Reporting \n (Exports)')
+ax3_export.set_xlabel('Year')
+ax3_export.set_ylabel('Count')
+ax3_export.xaxis.set_major_locator(ticker.MultipleLocator(5));
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_import, ax1_import = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot lines for export values
+sns.lineplot(data = df_trade[df_trade['flow'] == 'Import'], x = 'year', y = 'total_usd', 
+             ax = ax1_import, label = 'Total Import'
+            )
+
+sns.lineplot(data = df_trade[df_trade['flow'] == 'Import'], x = 'year', y = 'usd_share', 
+             ax = ax1_import, label = 'USD-invoiced Import'
+            )
+
+# Plot formatting
+ax1_import.set_title('USD Share of Total Imports \n (in dollars)')
+ax1_import.set_xlabel('Year')
+ax1_import.set_ylabel('Dollars in trillions')
+ax1_import.set_xticks(years_to_show)
+ax1_import.set_xticklabels(years_to_show)
+ax1_import.legend(loc = 'upper left', bbox_to_anchor = (1, 1));
+```
+
+```{python}
+# Instantiate figure and axis
+fig2_import, ax2_import = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot horizontal bars for USD import percent
+sns.barplot(data = df_trade[df_trade['flow'] == 'Import'], x = 'year', y = 'pct_usd_share',
+            ax = ax2_import, color = '#004C99');
+
+# Plot formatting
+ax2_import.set_title('USD Share of Total Imports \n (in percent)')
+ax2_import.set_xlabel('Year')
+ax2_import.set_ylabel('Percent')
+ax2_import.xaxis.set_major_locator(ticker.MultipleLocator(5));
+```
+
+```{python}
+# Instantiate figure and axis
+fig3_Import, ax3_Import = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot horizontal bars for number of countries reporting
+sns.barplot(data = df_trade[df_trade['flow'] == 'Import'], x = 'year', y = 'num_countries', 
+            ax = ax3_Import, color = '#990000');
+
+# Plot formatting
+ax3_Import.set_title('Number of Countries Reporting \n (Imports)')
+ax3_Import.set_xlabel('Year')
+ax3_Import.set_ylabel('Count')
+ax3_Import.xaxis.set_major_locator(ticker.MultipleLocator(5));
+```
+
+To supply the world with the dollars necessary to settle international trade transactions, the U.S. must run persistent trade deficits to generate dollar outflows to foreign countries. Historical U.S. current account data indicates that U.S. imports have consistently exceeded U.S. exports starting in the 1980s. However, it is important to note that the U.S. isn't making a one-sided sacrifice in incurring trade deficits to supply the world with dollars. According to macroeconomic theory, a country's trade deficits must be funded by foreign financial inflows. Historical U.S. financial account data shows that dollar outflows arising from U.S. trade deficits are largely offset by foreign dollar inflows to the U.S. Most of these foreign dollar inflows consist of noncontrolling portfolio investments in U.S. financial markets.
+
+```{python}
+query_bop = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    country_code,
+    bop_account,
+    value_usd / 1e9 AS value_usd
+FROM
+	gold.imf_bop_usa
+;
+'''
+```
+
+```{python}
+df_bop = pd.read_sql(query_bop, conn)
+```
+
+```{python}
+# value_usd in billions
+df_bop.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_financial, ax1_financial = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot lines for current account and financial account values
+sns.lineplot(data = df_bop[df_bop['bop_account'].isin(['Current account', 'Financial account'])], 
+             x = 'year', y = 'value_usd', hue = 'bop_account', ax = ax1_financial)
+
+# Plot formatting
+ax1_financial.set_title('Comparison of U.S. Current Account \n and Financial Account Balances')
+ax1_financial.set_xlabel('Year')
+ax1_financial.set_ylabel('Dollars in billions')
+ax1_financial.legend(loc='upper left', bbox_to_anchor=(1, 1));
+```
+
+The foundation for this circular dollar flow rests upon foreign countries' need to hold dollar reserves for purposes like international trade settlement and foreign exchange rate stabilization. The first two charts below show that the dollar makes up a dominant proportion of the world's disclosed official reserves. The third chart below shows that foreign countries play a significant role in funding the U.S. government through U.S. treasury purchases.
+
+```{python}
+query_reserves = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    currency,
+    value_usd / 1e9 AS value_usd,
+    pct_yr_total * 100 AS pct_yr_total
+FROM
+	gold.imf_reserves_world
+'''
+```
+
+```{python}
+df_reserves = pd.read_sql(query_reserves, conn)
+```
+
+```{python}
+df_reserves.head();
+```
+
+```{python}
+df_reserves_pivot = df_reserves.pivot(index = 'year', columns = 'currency', values = 'value_usd')
+```
+
+```{python}
+#| scrolled: true
+df_reserves_pivot.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_reserves, ax1_reserves = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot stacked bar charts showing reserves by currency over time
+df_reserves_pivot.plot(kind = 'barh', stacked = True, ax = ax1_reserves)
+
+# Plot formatting
+ax1_reserves.set_title('Disclosed International Reserves by Currency')
+ax1_reserves.set_ylabel('Dollars in billions')
+ax1_reserves.set_xlabel('Year')
+ax1_reserves.invert_yaxis()
+ax1_reserves.yaxis.set_major_locator(ticker.MultipleLocator(4))
+ax1_reserves.legend(loc = 'upper left', bbox_to_anchor = (1, 1));
+```
+
+```{python}
+# Instantiate figure and axis
+fig2_reserves, ax2_reserves = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot lines for USD share of global reserves
+sns.lineplot(data = df_reserves[df_reserves['currency'] == 'US dollar'], x = 'year', y = 'pct_yr_total',
+            ax = ax2_reserves)
+
+# Plot formatting
+ax2_reserves.set_title('USD Share of Disclosed International Reserves')
+ax2_reserves.set_xlabel('Year')
+ax2_reserves.set_ylabel('Percent');
+```
+
+```{python}
+query_treasuries = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    country_code,
+    source,
+    value_usd / 1e9 AS value_usd
+FROM
+	gold.fred_treasuries_consolidated_usa
+WHERE
+	source IN ('Domestic', 'Foreign');
+'''
+```
+
+```{python}
+# Dollars in billions
+df_treasuries = pd.read_sql(query_treasuries, conn)
+```
+
+```{python}
+df_treasuries.head();
+```
+
+```{python}
+df_treasuries_pivot = df_treasuries.pivot(index = 'year', columns = 'source', values = 'value_usd')
+```
+
+```{python}
+df_treasuries_pivot.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_treasuries, ax1_treasuries = plt.subplots(figsize=(6.4, 4.8))
+
+# Plot stacked bar charts showing Treasuries financed by source
+df_treasuries_pivot.plot(kind='line', stacked=True, ax=ax1_treasuries, linewidth=2)
+
+# Get the y-values (stacked values) and colors used in the plot
+colors = [line.get_color() for line in ax1_treasuries.lines]
+y_values = df_treasuries_pivot.cumsum(axis=1) 
+
+# First, fill the area under the lowest line
+ax1_treasuries.fill_between(y_values.index, 0, y_values.iloc[:, 0], color = colors[0], alpha = 0.6)
+
+# Then fill the area between each pair of stacked lines
+for i in range(1, len(y_values.columns)):
+    ax1_treasuries.fill_between(y_values.index, y_values.iloc[:, i-1], y_values.iloc[:, i], 
+                                color=colors[i], alpha=0.6)
+
+# Plot formatting
+ax1_treasuries.set_title('U.S. Treasury Financing by Origin')
+ax1_treasuries.set_xlabel('Year')
+ax1_treasuries.set_ylabel('Dollars in billions')
+ax1_treasuries.legend(loc='upper left', bbox_to_anchor=(1, 1));
+```
+
+# Policy problems arising from the global dollar system
+
+## U.S. violates the Bretton Woods System
+
+Despite the arguments for the merits of the global dollar system, the U.S. faced challenges to supplying the world with dollars early on. Under the original 1944 framework of the Bretton Woods System, the dollar was to be pegged to gold at a fixed rate of $35/oz and other currencies to the dollar. However, as the U.S. greatly increased its money supply to finance its growing government budget deficits related to the Vietnam War and the Great Society Programs in the 1960s, foreign countries began questioning whether the U.S. could credibly maintain the gold peg as global dollar reserves began exceeding U.S. gold reserves. 
+
+As mistrust in the U.S. grew, foreign countries started redeeming their dollar reserves for gold. To avoid depleting its gold reserves, the U.S. unilaterally violated the Bretton Woods System in 1971 when President Nixon suspended the dollar's convertibility to gold. This caused an uproar in the international community, but the world was already deeply entrenched in the global dollar system by this point. From this period onward, the credibility of the global dollar system shifted from U.S. gold reserves to the Federal Reserve's ability to competently adjust the dollar supply to meet worldwide demand.
+
+## Vulnerabilities from growing U.S. debt
+
+With the gold constraint removed, the dollar supply was free to expand flexibly under a new fiat currency regime. However, this set the stage for growing U.S. debt becoming a structural feature of the global dollar system. To understand why, let's look at the link between U.S. domestic net savings and trade deficits.
+
+With some macroeconomic theory, it can be shown that:
+
+$\text{Private net savings} + \text{Government budget balance} = \text{Trade balance}$
+
+By defining the following equality:
+
+$\text{Private net savings} + \text{Government budget balance} = \text{Domestic net savings}$
+
+It can be shown that:
+
+$\text{Domestic net savings} = \text{Trade balance}$
+
+Given that the U.S. must run persistent trade deficits to supply the world with dollars, one of three scenarios must occur:
+
+<div style="display: inline-block; text-align: left;">
+ 
+|Scenario 1|
+|----------|
+|Private net savings is negative (i.e., private sector consumes and invests more than its after-tax disposable income)|
+|Government runs a budget surplus (i.e., government takes in more tax revenue than it spends)|
+|Government budget surplus isn't large enough to offset negative private net savings|
+|Domestic net savings is negative|
+
+</div>
+
+<div style="display: inline-block; text-align: left;">
+    
+|Scenario 2|
+|----------|
+|Private net savings is positive  (i.e., private sector consumes and invests less than its after-tax disposable income)|
+|Government runs a budget deficit (i.e., government spends more than its tax revenue)|
+|Private net savings aren't large enough to offset the government budget deficit|
+|Domestic net savings is negative|
+
+</div>
+
+<div style="display: inline-block; text-align: left;">
+
+|Scenario 3|
+|----------|
+|Private net savings is negative (i.e., private sector consumes and invests more than its after-tax disposable income)|
+|Government runs a budget deficit (i.e., government spends more than its tax revenue)|
+|Domestic net savings is negative|
+
+</div>
+
+The prevailing historical trend in the U.S. has been Scenario 2, where the government budget deficits have consistently exceeded private net savings. This makes sense since the private sector cannot indefinitely spend more than it earns without running into credit problems. The U.S. government, on the other hand, has the sovereign power to issue debt in a currency that it controls, reinforced by the perpetual foreign demand for dollar reserves coming from the global dollar system. The end result is that the U.S. spends more than it saves by financing the gap using savings from the rest of the world.
+
+```{python}
+query_savings = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    country_code,
+    source,
+    value_usd / 1e9 AS value_usd
+FROM
+	gold.fred_savings_consolidated_usa;
+'''
+```
+
+```{python}
+# Dollars in billions
+df_savings = pd.read_sql(query_savings, conn)
+```
+
+```{python}
+df_savings.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_sector, ax1_sector = plt.subplots(nrows = 2, ncols = 1, figsize = (6.4, 4.8 * 2))
+
+# Plot stacked bar chart showing savings by sector
+sns.barplot(data = df_savings[df_savings['source'].isin(['Private sector', 'Public sector'])], 
+            x = 'year', y = 'value_usd', hue = 'source', ax = ax1_sector[0])
+
+# Plot line chart showing U.S. net savings
+sns.lineplot(data = df_savings[df_savings['source'] == 'Net'], 
+            x = 'year', y = 'value_usd', ax = ax1_sector[1])
+
+# Bar chart formatting
+
+## Set x-tick increments to show every 5th year
+min_year_savings = df_savings['year'].min()
+max_year_savings = df_savings['year'].max()
+years_to_show_savings = np.arange(min_year_savings, max_year_savings + 1, 5)
+
+ax1_sector[0].set_title('U.S. Domestic Savings by Sector')
+ax1_sector[0].set_xlabel('Year')
+ax1_sector[0].set_ylabel('Dollars in billions')
+ax1_sector[0].xaxis.set_major_locator(ticker.MultipleLocator(10))
+ax1_sector[0].legend(loc = 'upper left', bbox_to_anchor = (1, 1))
+
+# Line chart formatting
+ax1_sector[1].set_title('U.S. Domestic Net Savings')
+ax1_sector[1].set_xlabel('Year')
+ax1_sector[1].set_ylabel('Dollars in billions');
+```
+
+Unconstrained by the fiscal limitations of other countries lacking reserve currency status, the U.S. debt started ballooning without guardrails. The U.S. government's lack of fiscal discipline generates significant controversy with both domestic and foreign critics, who protest that they are held captive to subsidizing unpopular U.S. policies like wars. Despite the inherent conflicts of interest that are built into the global dollar system, the dollar's dominance has allowed the U.S. to finance its debt at relatively low interest rates. The charts below show that the historical 10-year yield for U.S. debt has been comparable to those of other similar advanced countries, whereas countries like Greece, India, and Spain that have either experienced fiscal/financial crises or are emerging economies have had to endure much higher cost of debt.
+
+```{python}
+query_yield_advanced = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    ten_year_yield
+FROM
+	gold.fred_yield_consolidated_world
+WHERE
+    country IN ('France', 'Germany', 'Japan', 'UK', 'USA')
+'''
+```
+
+```{python}
+query_yield_distress = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    ten_year_yield
+FROM
+	gold.fred_yield_consolidated_world
+WHERE
+    country IN ('Greece', 'India', 'Spain', 'USA')
+'''
+```
+
+```{python}
+query_yield_russia = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    ten_year_yield
+FROM
+	gold.fred_yield_consolidated_world
+WHERE
+    country IN ('Russia', 'USA')
+'''
+```
+
+```{python}
+dict_yield = {'Advanced': pd.read_sql(query_yield_advanced, conn),
+              'Distress': pd.read_sql(query_yield_distress, conn),
+              'Russia': pd.read_sql(query_yield_russia, conn)
+             }
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_yield, ax1_yield = plt.subplots(nrows = 2, ncols = 1, figsize = (7, 4.8 * 2))
+
+# Plot lines comparing 10y yield of advanced countries to U.S.
+sns.lineplot(data = dict_yield['Advanced'], x = 'year', y = 'ten_year_yield', hue = 'country', ax = ax1_yield[0])
+
+# Plot lines comparing 10y yield of distressed countries to U.S.
+sns.lineplot(data = dict_yield['Distress'], x = 'year', y = 'ten_year_yield', hue = 'country', ax=  ax1_yield[1]);
+
+
+# Plot formatting
+title_list_1 = ['Comparison of 10y Yield Between \n U.S. and Advanced Economies',
+              'Comparison of 10y Yield Between \n U.S. and Distressed/Emerging Economies'
+             ]
+
+for i in range(len(title_list_1)):
+    ax1_yield[i].set_title(f'{title_list_1[i]}')
+    ax1_yield[i].set_xlabel('Year')
+    ax1_yield[i].set_ylabel('Percent')
+    ax1_yield[i].legend(loc = 'upper left', bbox_to_anchor = (1, 1))
+
+plt.tight_layout();
+```
+
+However, recent U.S. policy choices have raised several concerns about whether the U.S. is self-sabotaging its own ability to sustain growing debt levels by undermining the global dollar system. On the foreign front, there are whispers of foreign countries quietly looking for ways to diversify away from dollar reserves as the U.S. wages trade wars against friends and foes alike. Notable examples include BRICS member countries that are seeking to increase bilateral trade settlements in their own currencies and China building an renminbi-based payment system as an alternative to U.S.-controlled payment systems like SWIFT. To make matters worse, these international trends are occurring in the midst of domestic stresses to the U.S. treasury market. Key examples include U.S. banks' reduced capacity to absorb new Treasury issuances due to balance sheet constraints and U.S. sovereign credit rating downgrades attributable to federal government shutdowns over spending negotiations.
+
+## U.S. shift from an industrialized economy to a financialized economy
+
+Another major policy challenge associated with the global dollar system is the ongoing U.S. attempt to reindustrialize its economy while maintaining the dollar's reserve currency status. The de-industrialization of the U.S. started accelerating in the 1980s when the U.S. began to justify outsourcing its manufacturing capacity using neoliberal free trade ideology. At the same time, the U.S. economy started becoming increasingly financialized as global capital flows became concentrated in Wall Street. The charts below show that the financial sector (defined here as a combination of finance, insurance, real estate, rental, and leasing) overtook the manufacturing sector's share of U.S. GDP in the late 1980s as overall U.S. GDP started growing exponentially at the same time. As of 2024, the financial sector makes up more than 20% of U.S. GDP whereas the manufacturing sector makes up less than 10%.
+
+```{python}
+query_sectors = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    country_code,
+    sector,
+    value_usd / 1e9 AS value_usd
+FROM
+	gold.nea_gdp_sectors_usa;
+'''
+```
+
+```{python}
+query_sectors_pct = '''
+SELECT
+	YEAR(year) AS year,
+	SUM(CASE WHEN sector = 'Financial' THEN value_usd ELSE 0 END) / 
+		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS financial_share,
+	SUM(CASE WHEN sector = 'Manufacturing' THEN value_usd ELSE 0 END) / 
+		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS manufacturing_share
+FROM
+	gold.nea_gdp_sectors_usa
+GROUP BY
+	year
+ORDER BY 
+	year ASC;
+'''
+```
+
+```{python}
+# Dollars in billions
+df_sectors = pd.read_sql(query_sectors, conn)
+```
+
+```{python}
+df_sectors.head();
+```
+
+```{python}
+df_sectors_pct = pd.read_sql(query_sectors_pct, conn)
+```
+
+```{python}
+df_sectors_pct = pd.melt(frame = df_sectors_pct, 
+                         id_vars = 'year', value_vars = ['financial_share', 'manufacturing_share'],
+                         var_name = 'sector', value_name = 'pct_of_gdp'
+                        )
+```
+
+```{python}
+df_sectors_pct.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_sectors, ax1_sectors = plt.subplots(nrows = 2, ncols = 1, figsize = (8, 4.8 * 2))
+
+# Plot GDP by sector lines
+sns.lineplot(data = df_sectors, x = 'year', y = 'value_usd', hue = 'sector', ax = ax1_sectors[0])
+
+# Plot sector share of GDP lines
+sns.lineplot(data = df_sectors_pct, x = 'year', y = 'pct_of_gdp', hue = 'sector', ax = ax1_sectors[1])
+
+
+# Plot formatting
+title_list_2 = ['GDP by Sector',
+              'Sector Share of GDP'
+             ]
+
+y_list_2 = ['Dollars in billions', 'Percent']
+
+for i in range(len(title_list_2)):
+    ax1_sectors[i].set_title(f'{title_list_2[i]}')
+    ax1_sectors[i].set_xlabel('Year')
+    ax1_sectors[i].set_ylabel(f'{y_list_2[i]}')
+    ax1_sectors[i].legend(loc = 'upper left', bbox_to_anchor = (1, 1))
+
+plt.tight_layout();
+```
+
+While this sectoral shift reinforced the dollar's reserve currency status by creating more dollar outflows that get recycled back into the U.S. financial markets, the U.S. now faces a strategic quandary in rebuidling its industrial base to counter China's rising influence. Recently, the U.S. policy approach to reindustrialization has consisted of using the trade war as a negotiating tool to pressure foreign countries and companies to invest in U.S. manufacturing capacity. However, it is unclear whether domestic industrial self-sufficiency is mutually compatible with the preservation of the global dollar system, which requires dollar outflows and continual demand for dollar reserves arising from international trade.
+
+
