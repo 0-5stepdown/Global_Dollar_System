@@ -22,3 +22,13 @@ Link to raw_datasets folder
 # Data Warehouse
 
 The table below describes how the raw data was processsed at each layer within the medallion architecture of the SQL data warehouse:
+
+# Memo
+
+View the Quarto document containing the memo at the Github page below:
+
+https://0-5stepdown.github.io/Global_Dollar_System/
+
+View the Jupyter notebook outlining the code used to generate the Quarto document in the repo folder below:
+
+
