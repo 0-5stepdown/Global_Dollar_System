@@ -20,7 +20,7 @@ The table below shows which data sources the raw data reports came from:
 
 CSV files containing the raw data reports can be found in the repo folder below:
 
-![raw_datasets](https://github.com/0-5stepdown/Global_Dollar_System/tree/main/raw_datasets)
+[raw_datasets](https://github.com/0-5stepdown/Global_Dollar_System/tree/main/raw_datasets)
 
 # Data Warehouse
 
