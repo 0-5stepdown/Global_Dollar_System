@@ -13,8 +13,8 @@ To enable the data analysis necessary for generating the memo, the project invol
 
 # Data Sources
 The table below organizes the raw data reports by data source:
-...
-...
+![Data Source](diagrams/data_source.png)
+
 CSV files containing the raw data reports can be found in the repo folder below:
 
 Link to raw_datasets folder
