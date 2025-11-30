@@ -18,7 +18,11 @@ The table below shows which data sources the raw data reports came from:
 
 # Raw data
 
-CSV files containing the raw data reports can be found in the repo folder below:
+The table below maps the raw data reports to their file names:
+
+![File Name Mapping](diagrams/file_name_map.png)
+
+The CSV files can be found in the repo folder below:
 
 [raw_datasets](https://github.com/0-5stepdown/Global_Dollar_System/tree/main/raw_datasets)
 
