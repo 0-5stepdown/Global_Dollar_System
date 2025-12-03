@@ -1,9 +1,9 @@
 # Project Overview
-Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the U.S. is unlikely to succeed in reversing its trade and fiscal deficits and reindustrializing its economy as long as it remains committed to preserving the dollar's reserve currency status in the global dollar system. 
+Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the U.S. is unlikely to succeed in reversing its trade and fiscal deficits and reindustrializing its economy. Instead, Trump's trade policies may end up undermining the global dollar system by pushing the international community away from the U.S. sphere of influence.
 
 To substantiate the memo narrative, the project involved:
 
-1. Identifying data sources
+1. Identifying supporting data sources
 2. Inspecting and extracting raw data
 3. Building a SQL data warehouse utilizing a medallion architecture to store and transform the raw data
 4. Querying the transformed data using SQL
