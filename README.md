@@ -1,5 +1,5 @@
 # Project Overview
-Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the U.S. is unlikely to succeed in reversing its trade and fiscal deficits and reindustrializing its economy by imposing tariffs and threatening to withdraw security guarantees. Instead, Trump's trade policies may end up undermining the global dollar system by pushing the international community to diversify away from dollar reserves.
+Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the U.S. is unlikely to succeed in reversing its trade and fiscal deficits and reindustrializing its economy by imposing tariffs. Instead, Trump's trade policies may end up undermining the global dollar system by pushing the international community to diversify away from dollar reserves.
 
 To substantiate the memo narrative, the project involved:
 
