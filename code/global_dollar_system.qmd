@@ -1,13 +1,17 @@
 ---
 format:
   html:
-    code-fold: false   
-    code-summary: ""      
+    code-fold: false
+    code-summary: ""
     execute:
-      echo: false         
-      warning: false     
+      echo: false
+      warning: false
       results: "hide"
+    toc: true        
+    toc-location: right  
+    toc-depth: 3        
 ---
+
 
 ```{python}
 # Import libraries
@@ -41,11 +45,26 @@ conn = pyodbc.connect(
 )
 ```
 
-# How the global dollar system works
 
-At the end of World War II, the U.S. had significant influence to create a global dollar system in which international trade and financial transactions would be conducted in dollars. Leveraging its status as the sole remaining superpower with the largest share of the world's economic output and gold reserves, the U.S. argued that a global dollar system would guard against currency wars, trade barriers, and illiquid financial markets that contributed to the onset of World War II.
+# Introduction
 
-Fast forwarding to more recent times, data from 1999 to 2019 shows that around 30% - 50% of global exports and imports were invoiced in dollars, indicating that the world continues to operate in a dollar-dominant international trade system.
+Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the mechanisms of the global dollar system make it unlikely that the U.S. will succeed in reversing its trade and fiscal deficits and reindustrializing its economy by imposing tariffs. Instead, Trump's trade policies may end up undermining the global dollar system by pushing foreign countries to diversify further away from dollar reserves.
+
+# Historical background
+
+Towards the end of World War II, the U.S. had significant influence to create a global dollar system in which international trade and financial transactions would be conducted in dollars. Leveraging its status as the sole remaining superpower with the largest share of the world's economic output and gold reserves, the U.S. argued that a single currency standard would guard against currency wars, trade barriers, and illiquid financial markets that contributed to the onset of World War II.
+
+Under the original 1944 framework of the Bretton Woods System, the dollar was to be pegged to gold at a fixed rate of $35/oz and other currencies to the dollar. The combination of large U.S. gold reserves and the dollar's redeemability for gold initially gave credibility to the dollar as a stable currency. In the early stages of the global dollar system, the U.S. supplied the world with dollars through foreign policy programs like the Marshall Plan, where the U.S. provided financial aid and capital investments to rebuild the economic base of foreign countries destroyed by the war. Foreign countries, in turn, used these dollars to import critical items like food, machinery, and industrial materials from the U.S. 
+
+The dollar-gold standard came under stress in the 1960s when the U.S. government chose to increase the dollar supply instead of raising taxes to finance the fiscal deficits related to the Vietnam War and the Great Society Programs. When the dollars circulating globally began exceeding the U.S. gold reserves, foreign countries began questioning whether the U.S. could credibly maintain the dollar's peg to gold. As mistrust in the U.S. grew, foreign countries started redeeming their dollar reserves for gold. To avoid depleting its gold reserves, the U.S. violated the Bretton Woods System unilaterally in 1971 when President Nixon suspended the dollar's convertibility to gold. This caused an uproar in the international community, but the world was already deeply entrenched in using the dollar by this point. 
+
+Despite the dollar's transition from a gold-backed currency to a fiat currency, the world's reliance on the dollar became further cemented through two major developments. The first development was the 1974 introduction of the petrodollar arrangement between the U.S. and Saudia Arabia, in which the U.S. promised security guarantees to Saudia Arabia in return for Saudia Arabia agreeing to price its oil in dollars. The second development was the expansion of the Eurodollar market in which foreign banks hold dollar deposits and conduct financial transactions in dollars outside of the U.S. Together, these developments made dollar reserves essential for foreign countries to engage in international trade and financial transactions.
+
+# Mechanisms of the global dollar system
+
+Now that the historical background of the global dollar system has been covered, let's look at how it works today.
+
+Starting with international trade, the percentage of trade invoiced in dollars estimates the demand for dollars to settle trade transactions. Data from 1999 to 2019 shows that around 30% - 50% of global exports and imports were invoiced in dollar, indicating that the dollar still plays a dominant role in international trade.
 
 ```{python}
 # SQL query to retrieve international trade data
@@ -190,7 +209,68 @@ ax3_Import.set_ylabel('Count')
 ax3_Import.xaxis.set_major_locator(ticker.MultipleLocator(5));
 ```
 
-To supply the world with the dollars necessary to settle international trade transactions, the U.S. must run persistent trade deficits to generate dollar outflows to foreign countries. Historical U.S. current account data indicates that U.S. imports have consistently exceeded U.S. exports starting in the 1980s. However, it is important to note that the U.S. isn't making a one-sided sacrifice in incurring trade deficits to supply the world with dollars. According to macroeconomic theory, a country's trade deficits must be funded by foreign financial inflows. Historical U.S. financial account data shows that dollar outflows arising from U.S. trade deficits are largely offset by foreign dollar inflows to the U.S. Most of these foreign dollar inflows consist of noncontrolling portfolio investments in U.S. financial markets.
+As aforementioned, foreign countries must hold dollar reserves for international trade settlement. The chart below shows that the dollar continues to make up a dominant proportion of the world's disclosed official reserves despite the emergence of competitor currencies like the Euro.
+
+```{python}
+query_reserves = '''
+SELECT
+	YEAR(year) AS year,
+    country,
+    currency,
+    value_usd / 1e9 AS value_usd,
+    pct_yr_total * 100 AS pct_yr_total
+FROM
+	gold.imf_reserves_world
+'''
+```
+
+```{python}
+df_reserves = pd.read_sql(query_reserves, conn)
+```
+
+```{python}
+df_reserves.head();
+```
+
+```{python}
+df_reserves_pivot = df_reserves.pivot(index = 'year', columns = 'currency', values = 'value_usd')
+```
+
+```{python}
+df_reserves_pivot.head();
+```
+
+```{python}
+# Instantiate figure and axis
+fig1_reserves, ax1_reserves = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot stacked bar charts showing reserves by currency over time
+df_reserves_pivot.plot(kind = 'barh', stacked = True, ax = ax1_reserves)
+
+# Plot formatting
+ax1_reserves.set_title('Disclosed International Reserves by Currency')
+ax1_reserves.set_ylabel('Dollars in billions')
+ax1_reserves.set_xlabel('Year')
+ax1_reserves.invert_yaxis()
+ax1_reserves.yaxis.set_major_locator(ticker.MultipleLocator(4))
+ax1_reserves.legend(loc = 'upper left', bbox_to_anchor = (1, 1));
+```
+
+```{python}
+# Instantiate figure and axis
+fig2_reserves, ax2_reserves = plt.subplots(figsize = (6.4, 4.8))
+
+# Plot lines for USD share of global reserves
+sns.lineplot(data = df_reserves[df_reserves['currency'] == 'US dollar'], x = 'year', y = 'pct_yr_total',
+            ax = ax2_reserves)
+
+# Plot formatting
+ax2_reserves.set_title('USD Share of Disclosed International Reserves')
+ax2_reserves.set_xlabel('Year')
+ax2_reserves.set_ylabel('Percent');
+```
+
+One important thing to note about the current global dollar system is that the mechanism through which the U.S. supplies the world with dollars has changed since the Bretton Woods period. With foreign countries having rebuilt their economies after World War II, dollars no longer primarily flow out to the world through U.S. financial aid and capital investments. Instead, the U.S. runs persistent trade deficits to provide dollar outflows to foreign countries that export to the U.S. Historical U.S. current account data indicates that U.S. imports have increasingly exceeded U.S. exports starting in the 1980s.
 
 ```{python}
 query_bop = '''
@@ -230,67 +310,90 @@ ax1_financial.set_ylabel('Dollars in billions')
 ax1_financial.legend(loc='upper left', bbox_to_anchor=(1, 1));
 ```
 
-The foundation for this circular dollar flow rests upon foreign countries' need to hold dollar reserves for purposes like international trade settlement and foreign exchange rate stabilization. The first two charts below show that the dollar makes up a dominant proportion of the world's disclosed official reserves. The third chart below shows that foreign countries play a significant role in funding the U.S. government through U.S. treasury purchases.
+A key driving force behind the U.S. trade deficits is the outsourcing of American manufacturing capacity that started accelerating in the 1980s. The Reagan era was characterized by the adoption of neoliberal economic ideology, which emphasized free trade and market deregulation. Under this political environment, American manufacturing companies seeking low labor costs aggressively moved their operations overseas. At the same time, the U.S. economy started becoming increasingly financialized as Wall Street became the center of global capital flows. The charts below show that the financial sector (defined here as a combination of finance, insurance, real estate, rental, and leasing) overtook the manufacturing sector's share of U.S. GDP in the late 1980s as overall U.S. GDP started growing exponentially. As of 2024, the financial sector makes up more than 20% of U.S. GDP whereas the manufacturing sector makes up less than 10%.
 
 ```{python}
-query_reserves = '''
+query_sectors = '''
 SELECT
 	YEAR(year) AS year,
     country,
-    currency,
-    value_usd / 1e9 AS value_usd,
-    pct_yr_total * 100 AS pct_yr_total
+    country_code,
+    sector,
+    value_usd / 1e9 AS value_usd
 FROM
-	gold.imf_reserves_world
+	gold.nea_gdp_sectors_usa;
 '''
 ```
 
 ```{python}
-df_reserves = pd.read_sql(query_reserves, conn)
+query_sectors_pct = '''
+SELECT
+	YEAR(year) AS year,
+	SUM(CASE WHEN sector = 'Financial' THEN value_usd ELSE 0 END) / 
+		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS financial_share,
+	SUM(CASE WHEN sector = 'Manufacturing' THEN value_usd ELSE 0 END) / 
+		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS manufacturing_share
+FROM
+	gold.nea_gdp_sectors_usa
+GROUP BY
+	year
+ORDER BY 
+	year ASC;
+'''
 ```
 
 ```{python}
-df_reserves.head();
+# Dollars in billions
+df_sectors = pd.read_sql(query_sectors, conn)
 ```
 
 ```{python}
-df_reserves_pivot = df_reserves.pivot(index = 'year', columns = 'currency', values = 'value_usd')
+df_sectors.head();
 ```
 
 ```{python}
-#| scrolled: true
-df_reserves_pivot.head();
+df_sectors_pct = pd.read_sql(query_sectors_pct, conn)
+```
+
+```{python}
+df_sectors_pct = pd.melt(frame = df_sectors_pct, 
+                         id_vars = 'year', value_vars = ['financial_share', 'manufacturing_share'],
+                         var_name = 'sector', value_name = 'pct_of_gdp'
+                        )
+```
+
+```{python}
+df_sectors_pct.head();
 ```
 
 ```{python}
 # Instantiate figure and axis
-fig1_reserves, ax1_reserves = plt.subplots(figsize = (6.4, 4.8))
+fig1_sectors, ax1_sectors = plt.subplots(nrows = 2, ncols = 1, figsize = (8, 4.8 * 2))
 
-# Plot stacked bar charts showing reserves by currency over time
-df_reserves_pivot.plot(kind = 'barh', stacked = True, ax = ax1_reserves)
+# Plot GDP by sector lines
+sns.lineplot(data = df_sectors, x = 'year', y = 'value_usd', hue = 'sector', ax = ax1_sectors[0])
 
-# Plot formatting
-ax1_reserves.set_title('Disclosed International Reserves by Currency')
-ax1_reserves.set_ylabel('Dollars in billions')
-ax1_reserves.set_xlabel('Year')
-ax1_reserves.invert_yaxis()
-ax1_reserves.yaxis.set_major_locator(ticker.MultipleLocator(4))
-ax1_reserves.legend(loc = 'upper left', bbox_to_anchor = (1, 1));
-```
+# Plot sector share of GDP lines
+sns.lineplot(data = df_sectors_pct, x = 'year', y = 'pct_of_gdp', hue = 'sector', ax = ax1_sectors[1])
 
-```{python}
-# Instantiate figure and axis
-fig2_reserves, ax2_reserves = plt.subplots(figsize = (6.4, 4.8))
-
-# Plot lines for USD share of global reserves
-sns.lineplot(data = df_reserves[df_reserves['currency'] == 'US dollar'], x = 'year', y = 'pct_yr_total',
-            ax = ax2_reserves)
 
 # Plot formatting
-ax2_reserves.set_title('USD Share of Disclosed International Reserves')
-ax2_reserves.set_xlabel('Year')
-ax2_reserves.set_ylabel('Percent');
+title_list_2 = ['GDP by Sector',
+              'Sector Share of GDP'
+             ]
+
+y_list_2 = ['Dollars in billions', 'Percent']
+
+for i in range(len(title_list_2)):
+    ax1_sectors[i].set_title(f'{title_list_2[i]}')
+    ax1_sectors[i].set_xlabel('Year')
+    ax1_sectors[i].set_ylabel(f'{y_list_2[i]}')
+    ax1_sectors[i].legend(loc = 'upper left', bbox_to_anchor = (1, 1))
+
+plt.tight_layout();
 ```
+
+However, the U.S. isn't making a one-sided sacrifice in incurring persistent trade deficits to supply the world with dollars. The previous chart showing historical U.S. current account data also shows historical U.S. financial account data, which indicates that dollar outflows from U.S. trade deficits are largely offset by foreign dollar inflows to the U.S. financial markets. For example, the chart below shows that a significant chunk of these foreign dollar inflows consist of U.S. treasury purchases that fund the federal government.
 
 ```{python}
 query_treasuries = '''
@@ -350,17 +453,13 @@ ax1_treasuries.set_ylabel('Dollars in billions')
 ax1_treasuries.legend(loc='upper left', bbox_to_anchor=(1, 1));
 ```
 
+The modern global dollar system thus creates circular dollar flows similar to its counterpart from the Bretton Woods period. These foreign dollar inflows keep borrowing costs low in the U.S., facilitate credit-driven economic growth, and enable Americans to consume and invest in excess of U.S. domestic income.
+
 # Policy problems arising from the global dollar system
 
-## U.S. violates the Bretton Woods System
+## Structural deficits and growing debt
 
-Despite the arguments for the merits of the global dollar system, the U.S. faced challenges to supplying the world with dollars early on. Under the original 1944 framework of the Bretton Woods System, the dollar was to be pegged to gold at a fixed rate of $35/oz and other currencies to the dollar. However, as the U.S. greatly increased its money supply to finance its growing government budget deficits related to the Vietnam War and the Great Society Programs in the 1960s, foreign countries began questioning whether the U.S. could credibly maintain the gold peg as global dollar reserves began exceeding U.S. gold reserves. 
-
-As mistrust in the U.S. grew, foreign countries started redeeming their dollar reserves for gold. To avoid depleting its gold reserves, the U.S. unilaterally violated the Bretton Woods System in 1971 when President Nixon suspended the dollar's convertibility to gold. This caused an uproar in the international community, but the world was already deeply entrenched in the global dollar system by this point. From this period onward, the credibility of the global dollar system shifted from U.S. gold reserves to the Federal Reserve's ability to competently adjust the dollar supply to meet worldwide demand.
-
-## Vulnerabilities from growing U.S. debt
-
-With the gold constraint removed, the dollar supply was free to expand flexibly under a new fiat currency regime. However, this set the stage for growing U.S. debt becoming a structural feature of the global dollar system. To understand why, let's look at the link between U.S. domestic net savings and trade deficits.
+While the global dollar system provides many benefits to the U.S., it is not without problems. One major problem is that it makes trade and fiscal deficits a structural feature of the U.S. economy, which in turn leads to growing U.S. debt. To understand how this works, let's look at the link between U.S. domestic net savings and trade deficits.
 
 With some macroeconomic theory, it can be shown that:
 
@@ -463,7 +562,7 @@ ax1_sector[1].set_xlabel('Year')
 ax1_sector[1].set_ylabel('Dollars in billions');
 ```
 
-Unconstrained by the fiscal limitations of other countries lacking reserve currency status, the U.S. debt started ballooning without guardrails. The U.S. government's lack of fiscal discipline generates significant controversy with both domestic and foreign critics, who protest that they are held captive to subsidizing unpopular U.S. policies like wars. Despite the inherent conflicts of interest that are built into the global dollar system, the dollar's dominance has allowed the U.S. to finance its debt at relatively low interest rates. The charts below show that the historical 10-year yield for U.S. debt has been comparable to those of other similar advanced countries, whereas countries like Greece, India, and Spain that have either experienced fiscal/financial crises or are emerging economies have had to endure much higher cost of debt.
+Unconstrained by the fiscal limitations of other countries lacking reserve currency status, the U.S. debt started ballooning without guardrails. The U.S. government's lack of fiscal discipline generates significant controversy with both domestic and foreign critics, who protest that they are held captive to subsidizing unpopular U.S. policies like wars. Despite the inherent conflicts of interest that are built into the global dollar system, the dollar's dominance has allowed the U.S. to finance its debt at relatively low interest rates without running into a fiscal crisis so far. The charts below show that the historical 10-year yield for U.S. debt has been comparable to those of other similar advanced countries, whereas countries like Greece, India, and Spain that have either experienced fiscal/financial crises or are emerging economies have had to endure much higher cost of debt.
 
 ```{python}
 query_yield_advanced = '''
@@ -536,93 +635,32 @@ for i in range(len(title_list_1)):
 plt.tight_layout();
 ```
 
-However, recent U.S. policy choices have raised several concerns about whether the U.S. is self-sabotaging its own ability to sustain growing debt levels by undermining the global dollar system. On the foreign front, there are whispers of foreign countries quietly looking for ways to diversify away from dollar reserves as the U.S. wages trade wars against friends and foes alike. Notable examples include BRICS member countries that are seeking to increase bilateral trade settlements in their own currencies and China building an renminbi-based payment system as an alternative to U.S.-controlled payment systems like SWIFT. To make matters worse, these international trends are occurring in the midst of domestic stresses to the U.S. treasury market. Key examples include U.S. banks' reduced capacity to absorb new Treasury issuances due to balance sheet constraints and U.S. sovereign credit rating downgrades attributable to federal government shutdowns over spending negotiations.
+However, there are rising concerns about the U.S. government's ability to perpetually borrow into the future at low interest rates. On the domestic front, several issues have been identified including the loss of fiscal flexibility due to increasing interest expense, reduced financial sector capacity to absorb U.S. Treasuries due to regulatory capital requirements, U.S. sovereign credit rating downgrades, and periods of acute Treasury market volatility. On the international front, stresses such as geopolitical conflicts with the U.S. (e.g., South China Sea), American weaponization of the global dollar system (e.g., U.S. freezing Russia's dollar reserves at the onset of the Ukraine War), and the Trump administration's trade war are pushing foreign countries to diversify away from holding their dollar reserves in U.S. treasuries. Notable examples include BRICS member countries exploring bilateral trade settlements in their own currencies and China building a renminbi-based alternative to the global dollar payment system.
 
-## U.S. shift from an industrialized economy to a financialized economy
+## Why Trump's trade policies are unlikely to reduce U.S. deficits and debt
 
-Another major policy challenge associated with the global dollar system is the ongoing U.S. attempt to reindustrialize its economy while maintaining the dollar's reserve currency status. The de-industrialization of the U.S. started accelerating in the 1980s when the U.S. began to justify outsourcing its manufacturing capacity using neoliberal free trade ideology. At the same time, the U.S. economy started becoming increasingly financialized as global capital flows became concentrated in Wall Street. The charts below show that the financial sector (defined here as a combination of finance, insurance, real estate, rental, and leasing) overtook the manufacturing sector's share of U.S. GDP in the late 1980s as overall U.S. GDP started growing exponentially at the same time. As of 2024, the financial sector makes up more than 20% of U.S. GDP whereas the manufacturing sector makes up less than 10%.
+Shifting the focus to recent U.S. trade policies, the Trump administration has been presenting its tariffs as a panacea that will reverse the U.S. trade and fiscal deficits and help pay down America's $38 trillion debt while preserving the global dollar system. However, carefully walking through the relationship between domestic net savings, trade balance, and financial flows suggests that such political claims are dubious. In order for the tariffs to have the purported effect, the following scenarios will likely have to unfold:
 
-```{python}
-query_sectors = '''
-SELECT
-	YEAR(year) AS year,
-    country,
-    country_code,
-    sector,
-    value_usd / 1e9 AS value_usd
-FROM
-	gold.nea_gdp_sectors_usa;
-'''
-```
+1. **U.S. private net savings:** Assuming that the U.S. government doesn't want its trade policies to trigger a recession, either Americans must consume and invest less at current GDP levels or GDP growth must be large enough to outpace consumption and investment such that U.S. private net savings increase.  
 
-```{python}
-query_sectors_pct = '''
-SELECT
-	YEAR(year) AS year,
-	SUM(CASE WHEN sector = 'Financial' THEN value_usd ELSE 0 END) / 
-		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS financial_share,
-	SUM(CASE WHEN sector = 'Manufacturing' THEN value_usd ELSE 0 END) / 
-		SUM(CASE WHEN sector = 'GDP' THEN value_usd ELSE 0 END) * 100 AS manufacturing_share
-FROM
-	gold.nea_gdp_sectors_usa
-GROUP BY
-	year
-ORDER BY 
-	year ASC;
-'''
-```
+2. **U.S. government budget balance:** Tariff revenues must be large enough to meaningfully offset the U.S. fiscal deficit. Taking into account the expected loss in U.S. tax revenues from the Trump tax cuts, a greater burden falls upon tariff revenues to cover U.S. fiscal spending that is expected to grow over time. 
 
-```{python}
-# Dollars in billions
-df_sectors = pd.read_sql(query_sectors, conn)
-```
+3.  **U.S. domestic net savings:** The sum of U.S. private net savings and government budget balance must be positive, resulting in positive U.S. domestic net savings.
 
-```{python}
-df_sectors.head();
-```
+4. **Trade balance:** U.S. exports must exceed imports.
 
-```{python}
-df_sectors_pct = pd.read_sql(query_sectors_pct, conn)
-```
+5. **Financial flows:** Dollars accumulated through positive U.S. domestic net savings must flow out of the U.S. to supply the world with dollars, similar to how the global dollar system did during the Bretton Woods period.
 
-```{python}
-df_sectors_pct = pd.melt(frame = df_sectors_pct, 
-                         id_vars = 'year', value_vars = ['financial_share', 'manufacturing_share'],
-                         var_name = 'sector', value_name = 'pct_of_gdp'
-                        )
-```
+A quick review of the data casts doubts on the feasibility of these scenarios. Looking back at the U.S. domestic net savings data, annual U.S. fiscal deficits have ranged from about \\$1 trillion to \\$3 trillion while the maximum U.S. private net saving was about \\$685 billion over the past 10 years. Unless a major change occurs to Americans' propensity to save, a crude best case scenario estimate indicates that tariffs must generate at least \\$315 billion to \\$2.3 trillion annually for the U.S. government, with the higher end of the estimate being more likely given the state of U.S. fiscal policies. In the meanwhile, annual U.S. imports have ranged from \\$2 trillion to \\$4 trillion over the past 10 years. This suggests that the U.S. government would have to impose a tariff rate ranging from 50% to 100% under recent international trade trends just to reach a neutral trade balance and fiscal balance! When potential complicating factors like foreign retaliatory protectionist policies, reduction in international trade, and U.S. economic disruption from loss of critical imports are taken into account, it quickly becomes apparent that the U.S. is unlikely to reverse its trade and fiscal deficits, let alone pay down the \\$38 trillion national debt. Further, even if the U.S. were to somehow generate positive domestic net savings and a trade surplus, it is unclear how the dollar outflows required to preserve the global dollar system are compatible with Trump's "America First" policies that frown upon foreign aid and overseas capital investments. This suggests that the Trump administration is either using flawed economic logic or knowingly making false claims for political gain.
 
-```{python}
-df_sectors_pct.head();
-```
+## Obstacles to U.S. reindustrialization 
 
-```{python}
-# Instantiate figure and axis
-fig1_sectors, ax1_sectors = plt.subplots(nrows = 2, ncols = 1, figsize = (8, 4.8 * 2))
+Another major focus of recent U.S. administrations has been strategic domestic reindustrialization to hedge against China's growing international influence. Recently, the Trump administration has taken a two-prong approach to accomplishing this objective:
 
-# Plot GDP by sector lines
-sns.lineplot(data = df_sectors, x = 'year', y = 'value_usd', hue = 'sector', ax = ax1_sectors[0])
+1. Use tariffs to reshore American manufacturing operations overseas
+2. Use tariffs as a negotiation tool to pressure foreign allies to invest in U.S. domestic manufacturing 
 
-# Plot sector share of GDP lines
-sns.lineplot(data = df_sectors_pct, x = 'year', y = 'pct_of_gdp', hue = 'sector', ax = ax1_sectors[1])
+Regarding the first approach, recent public reports suggest that tariffs have thus far provided mixed results in reshoring American manufacturing operations overseas. For example, some companies in more capital-intensive sectors have conveyed that they are choosing to return home because tariffs outweigh production cost savings from operating overseas. On the other hand, some companies in more labor-intensive sectors have indicated that they are facing a quandary because the increase in production costs from moving back home are prohibitively high even after accounting for tariffs. In addition to these anecdotal accounts, there are other complicating factors to take into account. For instance, given that American corporate interests have gotten accustomed to nearly five decades of neoliberal economic thinking, it is uncertain whether they will all remain politically complicit with the Trump administration's protectionist policies if their profit margins are squeezed. Further, it remains to be seen how extensively companies returning home will maximize automation to save production costs, thereby undermining the Trump administration's campaign promises of job creation and economic prosperity for the American working class.   
 
-
-# Plot formatting
-title_list_2 = ['GDP by Sector',
-              'Sector Share of GDP'
-             ]
-
-y_list_2 = ['Dollars in billions', 'Percent']
-
-for i in range(len(title_list_2)):
-    ax1_sectors[i].set_title(f'{title_list_2[i]}')
-    ax1_sectors[i].set_xlabel('Year')
-    ax1_sectors[i].set_ylabel(f'{y_list_2[i]}')
-    ax1_sectors[i].legend(loc = 'upper left', bbox_to_anchor = (1, 1))
-
-plt.tight_layout();
-```
-
-While this sectoral shift reinforced the dollar's reserve currency status by creating more dollar outflows that get recycled back into the U.S. financial markets, the U.S. now faces a strategic quandary in rebuidling its industrial base to counter China's rising influence. Recently, the U.S. policy approach to reindustrialization has consisted of using the trade war as a negotiating tool to pressure foreign countries and companies to invest in U.S. manufacturing capacity. However, it is unclear whether domestic industrial self-sufficiency is mutually compatible with the preservation of the global dollar system, which requires dollar outflows and continual demand for dollar reserves arising from international trade.
-
+Moving on to the second approach, there are signs that the Trump administration's heavy-handed negotiation approach are straining diplomatic relations and making foreign allies increasingly cautious when investing in U.S. domestic manufacturing. For example, in a controversial incident that occurred on November 2025, South Korean workers building a Hyundai manufacturing site near Savannah, Georgia were raided, shackled, and detained by U.S. Immigration and Customs Enforcement agents while the two countries were negotiating the terms of South Korea's investment commitments to American manufacturing. Investigations into the incident highlighted several practical problems, such as the need to reform U.S. work visa programs, foreign resistance to transferring proprietary technical knowledge and skills, language barriers, and growing anti-American sentiments overseas. While foreign allies are still ultimately likely to comply with American demands in the near term to preserve tariff-exempt access to the U.S. markets, long-term progress towards reindustrializing the U.S. may become hindered as foreign allies become more apprehensive about navigating the politically-charged business environment in the U.S. In addition, foreign allies may accelerate the worldwide diversification away from the global dollar system if they perceive that U.S. trade policies pose growing political risk.
 
