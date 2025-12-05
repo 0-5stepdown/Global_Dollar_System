@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>global_dollar_system</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="global_dollar_system_files/libs/clipboard/clipboard.min.js"></script>
+<script src="global_dollar_system_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="global_dollar_system_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="global_dollar_system_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="global_dollar_system_files/libs/quarto-html/popper.min.js"></script>
+<script src="global_dollar_system_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="global_dollar_system_files/libs/quarto-html/anchor.min.js"></script>
+<link href="global_dollar_system_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="global_dollar_system_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="global_dollar_system_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="global_dollar_system_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="global_dollar_system_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#historical-background" id="toc-historical-background" class="nav-link active" data-scroll-target="#historical-background">Historical background</a></li>
+  <li><a href="#mechanisms-of-the-global-dollar-system" id="toc-mechanisms-of-the-global-dollar-system" class="nav-link" data-scroll-target="#mechanisms-of-the-global-dollar-system">Mechanisms of the global dollar system</a></li>
+  <li><a href="#policy-problems-arising-from-the-global-dollar-system" id="toc-policy-problems-arising-from-the-global-dollar-system" class="nav-link" data-scroll-target="#policy-problems-arising-from-the-global-dollar-system">Policy problems arising from the global dollar system</a>
+  <ul class="collapse">
+  <li><a href="#structural-deficits-and-growing-debt" id="toc-structural-deficits-and-growing-debt" class="nav-link" data-scroll-target="#structural-deficits-and-growing-debt">Structural deficits and growing debt</a></li>
+  <li><a href="#why-trumps-trade-policies-are-unlikely-to-reduce-u.s.-deficits-and-debt" id="toc-why-trumps-trade-policies-are-unlikely-to-reduce-u.s.-deficits-and-debt" class="nav-link" data-scroll-target="#why-trumps-trade-policies-are-unlikely-to-reduce-u.s.-deficits-and-debt">Why Trump’s trade policies are unlikely to reduce U.S. deficits and debt</a></li>
+  <li><a href="#obstacles-to-u.s.-reindustrialization" id="toc-obstacles-to-u.s.-reindustrialization" class="nav-link" data-scroll-target="#obstacles-to-u.s.-reindustrialization">Obstacles to U.S. reindustrialization</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Public policy discussions regarding the effects of protectionist measures are receiving the spotlight once again as the Trump administration wages a second round of trade wars in 2025. Despite political claims to the contrary, this project presents a short memo arguing that the mechanisms of the global dollar system make it unlikely that the U.S. will succeed in reversing its trade and fiscal deficits and reindustrializing its economy by imposing tariffs. Instead, Trump’s trade policies may end up undermining the global dollar system by pushing foreign countries to diversify further away from dollar reserves.</p>
+<section id="historical-background" class="level1">
+<h1>Historical background</h1>
+<p>Towards the end of World War II, the U.S. had significant influence to create a global dollar system in which international trade and financial transactions would be conducted in dollars. Leveraging its status as the sole remaining superpower with the largest share of the world’s economic output and gold reserves, the U.S. argued that a single currency standard would guard against currency wars, trade barriers, and illiquid financial markets that contributed to the onset of World War II.</p>
+<p>Under the original 1944 framework of the Bretton Woods System, the dollar was to be pegged to gold at a fixed rate of $35/oz and other currencies to the dollar. The combination of large U.S. gold reserves and the dollar’s redeemability for gold initially gave credibility to the dollar as a stable currency. In the early stages of the global dollar system, the U.S. supplied the world with dollars through foreign policy programs like the Marshall Plan, where the U.S. provided financial aid and capital investments to rebuild the economic base of foreign countries destroyed by the war. Foreign countries, in turn, used these dollars to import critical items like food, machinery, and industrial materials from the U.S.</p>
+<p>The dollar-gold standard came under stress in the 1960s when the U.S. government chose to increase the dollar supply instead of raising taxes to finance the fiscal deficits related to the Vietnam War and the Great Society Programs. When the dollars circulating globally began exceeding the U.S. gold reserves, foreign countries began questioning whether the U.S. could credibly maintain the dollar’s peg to gold. As mistrust in the U.S. grew, foreign countries started redeeming their dollar reserves for gold. To avoid depleting its gold reserves, the U.S. violated the Bretton Woods System unilaterally in 1971 when President Nixon suspended the dollar’s convertibility to gold. This caused an uproar in the international community, but the world was already deeply entrenched in using the dollar by this point.</p>
+<p>Despite the dollar’s transition from a gold-backed currency to a fiat currency, the world’s reliance on the dollar became further cemented through two major developments. The first development was the 1974 introduction of the petrodollar arrangement between the U.S. and Saudia Arabia, in which the U.S. promised security guarantees to Saudia Arabia in return for Saudia Arabia agreeing to price its oil in dollars. The second development was the expansion of the Eurodollar market in which foreign banks hold dollar deposits and conduct financial transactions in dollars outside of the U.S. Together, these developments made dollar reserves essential for foreign countries to engage in international trade and financial transactions.</p>
+</section>
+<section id="mechanisms-of-the-global-dollar-system" class="level1">
+<h1>Mechanisms of the global dollar system</h1>
+<p>Now that the historical background of the global dollar system has been covered, let’s look at how it works today.</p>
+<p>Starting with international trade, the percentage of trade invoiced in dollars estimates the demand for dollars to settle trade transactions. Data from 1999 to 2019 shows that around 30% - 50% of global exports and imports were invoiced in dollar, indicating that the dollar still plays a dominant role in international trade.</p>
+<div id="b4bf54a9" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-9-output-1.png" width="732" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="dc467399" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-10-output-1.png" width="546" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9ed3e629" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-11-output-1.png" width="546" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="ce3337ef" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-12-output-1.png" width="732" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="68e3c07a" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-13-output-1.png" width="546" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9ba4921e" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-14-output-1.png" width="546" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As aforementioned, foreign countries must hold dollar reserves for international trade settlement. The chart below shows that the dollar continues to make up a dominant proportion of the world’s disclosed official reserves despite the emergence of competitor currencies like the Euro.</p>
+<div id="15e42493" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-20-output-1.png" width="765" height="435" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="916bdcca" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-21-output-1.png" width="550" height="435" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One important thing to note about the current global dollar system is that the mechanism through which the U.S. supplies the world with dollars has changed since the Bretton Woods period. With foreign countries having rebuilt their economies after World War II, dollars no longer primarily flow out to the world through U.S. financial aid and capital investments. Instead, the U.S. runs persistent trade deficits to provide dollar outflows to foreign countries that export to the U.S. Historical U.S. current account data indicates that U.S. imports have increasingly exceeded U.S. exports starting in the 1980s.</p>
+<div id="06fbcc5c" class="cell" data-execution_count="24">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-25-output-1.png" width="739" height="453" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A key driving force behind the U.S. trade deficits is the outsourcing of American manufacturing capacity that started accelerating in the 1980s. The Reagan era was characterized by the adoption of neoliberal economic ideology, which emphasized free trade and market deregulation. Under this political environment, American manufacturing companies seeking low labor costs aggressively moved their operations overseas. At the same time, the U.S. economy started becoming increasingly financialized as Wall Street became the center of global capital flows. The charts below show that the financial sector (defined here as a combination of finance, insurance, real estate, rental, and leasing) overtook the manufacturing sector’s share of U.S. GDP in the late 1980s as overall U.S. GDP started growing exponentially. As of 2024, the financial sector makes up more than 20% of U.S. GDP whereas the manufacturing sector makes up less than 10%.</p>
+<div id="405df21c" class="cell" data-execution_count="32">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-33-output-1.png" width="757" height="910" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, the U.S. isn’t making a one-sided sacrifice in incurring persistent trade deficits to supply the world with dollars. The previous chart showing historical U.S. current account data also shows historical U.S. financial account data, which indicates that dollar outflows from U.S. trade deficits are largely offset by foreign dollar inflows to the U.S. financial markets. For example, the chart below shows that a significant chunk of these foreign dollar inflows consist of U.S. treasury purchases that fund the federal government.</p>
+<div id="07b7b079" class="cell" data-execution_count="38">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-39-output-1.png" width="683" height="435" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The modern global dollar system thus creates circular dollar flows similar to its counterpart from the Bretton Woods period. These foreign dollar inflows keep borrowing costs low in the U.S., facilitate credit-driven economic growth, and enable Americans to consume and invest in excess of U.S. domestic income.</p>
+</section>
+<section id="policy-problems-arising-from-the-global-dollar-system" class="level1">
+<h1>Policy problems arising from the global dollar system</h1>
+<section id="structural-deficits-and-growing-debt" class="level2">
+<h2 class="anchored" data-anchor-id="structural-deficits-and-growing-debt">Structural deficits and growing debt</h2>
+<p>While the global dollar system provides many benefits to the U.S., it is not without problems. One major problem is that it makes trade and fiscal deficits a structural feature of the U.S. economy, which in turn leads to growing U.S. debt. To understand how this works, let’s look at the link between U.S. domestic net savings and trade deficits.</p>
+<p>With some macroeconomic theory, it can be shown that:</p>
+<p><span class="math inline">\(\text{Private net savings} + \text{Government budget balance} = \text{Trade balance}\)</span></p>
+<p>By defining the following equality:</p>
+<p><span class="math inline">\(\text{Private net savings} + \text{Government budget balance} = \text{Domestic net savings}\)</span></p>
+<p>It can be shown that:</p>
+<p><span class="math inline">\(\text{Domestic net savings} = \text{Trade balance}\)</span></p>
+<p>Given that the U.S. must run persistent trade deficits to supply the world with dollars, one of three scenarios must occur:</p>
+<div style="display: inline-block; text-align: left;">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Private net savings is negative (i.e., private sector consumes and invests more than its after-tax disposable income)</td>
+</tr>
+<tr class="even">
+<td>Government runs a budget surplus (i.e., government takes in more tax revenue than it spends)</td>
+</tr>
+<tr class="odd">
+<td>Government budget surplus isn’t large enough to offset negative private net savings</td>
+</tr>
+<tr class="even">
+<td>Domestic net savings is negative</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="display: inline-block; text-align: left;">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Private net savings is positive (i.e., private sector consumes and invests less than its after-tax disposable income)</td>
+</tr>
+<tr class="even">
+<td>Government runs a budget deficit (i.e., government spends more than its tax revenue)</td>
+</tr>
+<tr class="odd">
+<td>Private net savings aren’t large enough to offset the government budget deficit</td>
+</tr>
+<tr class="even">
+<td>Domestic net savings is negative</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style="display: inline-block; text-align: left;">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Private net savings is negative (i.e., private sector consumes and invests more than its after-tax disposable income)</td>
+</tr>
+<tr class="even">
+<td>Government runs a budget deficit (i.e., government spends more than its tax revenue)</td>
+</tr>
+<tr class="odd">
+<td>Domestic net savings is negative</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The prevailing historical trend in the U.S. has been Scenario 2, where the government budget deficits have consistently exceeded private net savings. This makes sense since the private sector cannot indefinitely spend more than it earns without running into credit problems. The U.S. government, on the other hand, has the sovereign power to issue debt in a currency that it controls, reinforced by the perpetual foreign demand for dollar reserves coming from the global dollar system. The end result is that the U.S. spends more than it saves by financing the gap using savings from the rest of the world.</p>
+<div id="b7616a2e" class="cell" data-execution_count="42">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-43-output-1.png" width="715" height="789" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Unconstrained by the fiscal limitations of other countries lacking reserve currency status, the U.S. debt started ballooning without guardrails. The U.S. government’s lack of fiscal discipline generates significant controversy with both domestic and foreign critics, who protest that they are held captive to subsidizing unpopular U.S. policies like wars. Despite the inherent conflicts of interest that are built into the global dollar system, the dollar’s dominance has allowed the U.S. to finance its debt at relatively low interest rates without running into a fiscal crisis so far. The charts below show that the historical 10-year yield for U.S. debt has been comparable to those of other similar advanced countries, whereas countries like Greece, India, and Spain that have either experienced fiscal/financial crises or are emerging economies have had to endure much higher cost of debt.</p>
+<div id="89a25021" class="cell" data-execution_count="47">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="global_dollar_system_files/figure-html/cell-48-output-1.png" width="661" height="911" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>However, there are rising concerns about the U.S. government’s ability to perpetually borrow into the future at low interest rates. On the domestic front, several issues have been identified including the loss of fiscal flexibility due to increasing interest expense, reduced financial sector capacity to absorb U.S. Treasuries due to regulatory capital requirements, U.S. sovereign credit rating downgrades, and periods of acute Treasury market volatility. On the international front, stresses such as geopolitical conflicts with the U.S. (e.g., South China Sea), American weaponization of the global dollar system (e.g., U.S. freezing Russia’s dollar reserves at the onset of the Ukraine War), and the Trump administration’s trade war are pushing foreign countries to diversify away from holding their dollar reserves in U.S. treasuries. Notable examples include BRICS member countries exploring bilateral trade settlements in their own currencies and China building a renminbi-based alternative to the global dollar payment system.</p>
+</section>
+<section id="why-trumps-trade-policies-are-unlikely-to-reduce-u.s.-deficits-and-debt" class="level2">
+<h2 class="anchored" data-anchor-id="why-trumps-trade-policies-are-unlikely-to-reduce-u.s.-deficits-and-debt">Why Trump’s trade policies are unlikely to reduce U.S. deficits and debt</h2>
+<p>Shifting the focus to recent U.S. trade policies, the Trump administration has been presenting its tariffs as a panacea that will reverse the U.S. trade and fiscal deficits and help pay down America’s $38 trillion debt while preserving the global dollar system. However, carefully walking through the relationship between domestic net savings, trade balance, and financial flows suggests that such political claims are dubious. In order for the tariffs to have the purported effect, the following scenarios will likely have to unfold:</p>
+<ol type="1">
+<li><p><strong>U.S. private net savings:</strong> Assuming that the U.S. government doesn’t want its trade policies to trigger a recession, either Americans must consume and invest less at current GDP levels or GDP growth must be large enough to outpace consumption and investment such that U.S. private net savings increase.</p></li>
+<li><p><strong>U.S. government budget balance:</strong> Tariff revenues must be large enough to meaningfully offset the U.S. fiscal deficit. Taking into account the expected loss in U.S. tax revenues from the Trump tax cuts, a greater burden falls upon tariff revenues to cover U.S. fiscal spending that is expected to grow over time.</p></li>
+<li><p><strong>U.S. domestic net savings:</strong> The sum of U.S. private net savings and government budget balance must be positive, resulting in positive U.S. domestic net savings.</p></li>
+<li><p><strong>Trade balance:</strong> U.S. exports must exceed imports.</p></li>
+<li><p><strong>Financial flows:</strong> Dollars accumulated through positive U.S. domestic net savings must flow out of the U.S. to supply the world with dollars, similar to how the global dollar system did during the Bretton Woods period.</p></li>
+</ol>
+<p>A quick review of the data casts doubts on the feasibility of these scenarios. Looking back at the U.S. domestic net savings data, annual U.S. fiscal deficits have ranged from about \$1 trillion to \$3 trillion while the maximum U.S. private net saving was about \$685 billion over the past 10 years. Unless a major change occurs to Americans’ propensity to save, a crude best case scenario estimate indicates that tariffs must generate at least \$315 billion to \$2.3 trillion annually for the U.S. government, with the higher end of the estimate being more likely given the state of U.S. fiscal policies. In the meanwhile, annual U.S. imports have ranged from \$2 trillion to \$4 trillion over the past 10 years. This suggests that the U.S. government would have to impose a tariff rate ranging from 50% to 100% under recent international trade trends just to reach a neutral trade balance and fiscal balance! When potential complicating factors like foreign retaliatory protectionist policies, reduction in international trade, and U.S. economic disruption from loss of critical imports are taken into account, it quickly becomes apparent that the U.S. is unlikely to reverse its trade and fiscal deficits, let alone pay down the \$38 trillion national debt. Further, even if the U.S. were to somehow generate positive domestic net savings and a trade surplus, it is unclear how the dollar outflows required to preserve the global dollar system are compatible with Trump’s “America First” policies that frown upon foreign aid and overseas capital investments. This suggests that the Trump administration is either using flawed economic logic or knowingly making false claims for political gain.</p>
+</section>
+<section id="obstacles-to-u.s.-reindustrialization" class="level2">
+<h2 class="anchored" data-anchor-id="obstacles-to-u.s.-reindustrialization">Obstacles to U.S. reindustrialization</h2>
+<p>Another major focus of recent U.S. administrations has been strategic domestic reindustrialization to hedge against China’s growing international influence. Recently, the Trump administration has taken a two-prong approach to accomplishing this objective:</p>
+<ol type="1">
+<li>Use tariffs to reshore American manufacturing operations overseas</li>
+<li>Use tariffs as a negotiation tool to pressure foreign allies to invest in U.S. domestic manufacturing</li>
+</ol>
+<p>Regarding the first approach, recent public reports suggest that tariffs have thus far provided mixed results in reshoring American manufacturing operations overseas. For example, some companies in more capital-intensive sectors have conveyed that they are choosing to return home because tariffs outweigh production cost savings from operating overseas. On the other hand, some companies in more labor-intensive sectors have indicated that they are facing a quandary because the increase in production costs from moving back home are prohibitively high even after accounting for tariffs. In addition to these anecdotal accounts, there are other complicating factors to take into account. For instance, given that American corporate interests have gotten accustomed to nearly five decades of neoliberal economic thinking, it is uncertain whether they will all remain politically complicit with the Trump administration’s protectionist policies if their profit margins are squeezed. Further, it remains to be seen how extensively companies returning home will maximize automation to save production costs, thereby undermining the Trump administration’s campaign promises of job creation and economic prosperity for the American working class.</p>
+<p>Moving on to the second approach, there are signs that the Trump administration’s heavy-handed negotiation approach are straining diplomatic relations and making foreign allies increasingly cautious when investing in U.S. domestic manufacturing. For example, in a controversial incident that occurred on November 2025, South Korean workers building a Hyundai manufacturing site near Savannah, Georgia were raided, shackled, and detained by U.S. Immigration and Customs Enforcement agents while the two countries were negotiating the terms of South Korea’s investment commitments to American manufacturing. Investigations into the incident highlighted several practical problems, such as the need to reform U.S. work visa programs, foreign resistance to transferring proprietary technical knowledge and skills, language barriers, and growing anti-American sentiments overseas. While foreign allies are still ultimately likely to comply with American demands in the near term to preserve tariff-exempt access to the U.S. markets, long-term progress towards reindustrializing the U.S. may become hindered as foreign allies become more apprehensive about navigating the politically-charged business environment in the U.S. In addition, foreign allies may accelerate the worldwide diversification away from the global dollar system if they perceive that U.S. trade policies pose growing political risk.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
